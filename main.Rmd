@@ -1,0 +1,146 @@
+<h3 style="text-align:center">Cuestionamiento básico previo a la práctica</h3><br/>
+
+**¿Qué tipo de problema de ingeniería resuelve el algoritmo K-Means?**
+<p>De acuerdo a los tipos de probelamas de ingniería vistos en aprendizaje máquina: agrupamiento</p>
+
+<h3 style="text-align:center">Desarrollo</h3><br/>
+
+<p>**1. Ingresa al entorno de desarrollo de R. Verás una interfaz como la que muestra la
+figura 1, en la cual se observa la consola de comandos. En esa consola debes
+teclear los comandos que requieras procesar en el lenguaje.**</p>
+
+<img src="C:/Users/juan_/OneDrive - Universidad de Colima/Escritorio/6to/practica 4 k-means - MdD/img/figure1.png"/><br/>
+<p>Figura 1. El entorno de desarrollo de R.</p><br/>
+
+<p>**2. Al instalar R, sólo se instala el núcleo del lenguaje, por lo que si es la primera
+vez que utilzas el entorno de desarrollo debes instalar los paquetes que requieres
+para hacer tu procesamiento estadístico. En este caso, el paquete necesario para
+implementar el algoritmo K-Means es tidyverse y el requerido para manejar
+archivos de Excel en R es readxl. Por lo anterior, debes instalar ambos
+paquetes, así que necesitas teclear los siguientes dos comandos en la consola de
+R para poder realizar la práctica:**</p>
+install.packages("tidyverse")
+install.packages("readxl")
+
+<p>**3. Una vez que instalas los paquetes, debes indicar cuál biblioteca de funciones
+utilizarás. Para esto debes abrirla también en la consola de R. El siguiente
+teclado te permite realizar esa actividad.
+library(readxl)**</p>
+
+```{r}
+library("readxl")
+```
+
+<p>**4. Una vez que tienes instaladas las bilbiotecas que requieres, es necesario que
+crees un archivo de hoja de cálculo en Excel en el cual almacenes los datos que
+procesarás en R. Excel es un manejador de hoja de cálculo electrónica
+ampliamente adoptado para captura de datos. Para esta práctica debes crear la
+hoja de cálculo con los datos del ejemplo visto en clases [3]. Observa la figura 2,
+la cual muestra esos datos.**</p>
+
+<img src="C:/Users/juan_/OneDrive - Universidad de Colima/Escritorio/6to/practica 4 k-means - MdD/img/figure2.png"/><br/>
+<p>Figura 2. Datos para procesamiento, elaborados en Excel.</p><br/>
+
+<p>**5. Una vez creado y almacenado el archivo de hoja de cálculo debes importarlo
+desde R a fin de procesarlo. Para lo anterior, teclea lo siguiente en la consola de
+comandos de R.**</p>
+
+Resultados <-
+read_excel("~/Documents/DocsVic/FIME/AI/2017/Prácticas/Datos.xlsx")
+Resultados
+
+```{r}
+dataSet <- read_excel("C:/Users/juan_/OneDrive - Universidad de Colima/Escritorio/6to/practica 4 k-means - MdD/src/data.xlsx")
+
+dataFrame = data.frame(dataSet)
+print(dataFrame)
+```
+
+El primer comando importa los datos de un archivo de hoja de cálculo creado en
+Excel. La importación se crea en una conjunto de datos llamado Resultados.
+Ese archivo se llama Datos.xlsx y está almacenado en
+/Documents/DocsVic/FIME/AI/2017/Prácticas/
+El segundo comando visualiza en pantalla el contenido del conjunto de datos
+recién creado. La figura tres muestra ese resultado.
+
+<img src="C:/Users/juan_/OneDrive - Universidad de Colima/Escritorio/6to/practica 4 k-means - MdD/img/figure3.png"/><br/>
+<p>Figura 3. Aplicación de la sentencia read_excel y despliegue de sus resultados.</p><br/>
+
+<p>**6. Una vez importados los datos desde una hoja de cálculo de Excel, debes
+implementar el algoritmo de agrupamiento para identificar grupos. Existen
+varios de ellos, en esta práctica utilizarás el algoritmo K-Means. Para aplicar ese
+algoritmo sobre los datos importados, usa el siguiente comando:**</p>
+
+grupos = kmeans(Resultados, 2, nstart=100)
+
+```{r}
+clusters = kmeans(dataFrame, 2, nstart = 100)
+```
+
+Al teclear el comando kmeans, R invoca ese algoritmo de agrupamiento. El
+resultado de los grupos se almacena en la variable grupos. En el comando
+anterior, el algoritmo de agrupamiento kmeans se ejecuta en el conjunto de datos
+Resultados. Los datos se agruparán en dos conglomerados, por eso va el
+segundo argumento. El tercer argumento indica la cantidad de conjuntos
+aleatorios a ser seleccionados.
+
+<p>**7. Para visualizar el grupo al que pertenece cada dato de Resultados, debes
+desplegar el contenido de grupos.Para eso debes escribir ese nombre de
+variable en la línea de comandos de R. La figura 4 describe el resultado de esa
+acción.**</p>
+
+<img src="C:/Users/juan_/OneDrive - Universidad de Colima/Escritorio/6to/practica 4 k-means - MdD/img/figure4.png"/><br/>
+<p>Figura 4. Resultado de aplicación del algoritmo kmeans en R.</p><br/>
+
+En la figura 4, la línea que sigue a la etiqueta Clustering vector indica a qué
+grupo pertenece cada caso del conjunto de datos Resultados. De lo anterior, los
+casos 1 y 2 pertenecen al grupo 2, mientras que los casos 3 y 4 pertenecen al grupo 1.
+La demás, es información complementaria al resultado del agrupamiento.
+
+```{r}
+print(clusters)
+```
+
+<p>**8. Otra forma de ver el resultado del agrupamiento, es mostrar gráficamente los
+grupos, para ese efecto, teclea el siguiente comando:**</p>
+plot(Resultados,col=grupos$cluster)
+El resultado del comando anterior se muestra en la figura 5. En ésta pueden
+verse las dos variables importadas en Resultados: ph y wi. También, puede
+observarse que cada caso tiene un color que es, o bien rojo o negro. Cada uno de
+los cuatro elementos se colorea de uno de esos colores y todos los elementos de
+un mismo color pertenecen al mismo grupo. En este ejemplo sólo hay dos
+colores porque se eligió definir sólo dos grupos. El resultado de plot se muestra
+en un formulario que se crea aparte de la interfaz de la ventana de comando de
+R.
+
+<img src="C:/Users/juan_/OneDrive - Universidad de Colima/Escritorio/6to/practica 4 k-means - MdD/img/figure5.png"/><br/>
+<p>Figura 5. Resultado gráfico de la aplicación del algoritmo kmeans en R mediante el comando plot.</p><br/>
+
+```{r}
+plot(dataFrame, col = clusters$cluster)
+```
+
+A continuación, toma en cuenta la tabla de Excel que creaste. Añade otros seis registros,
+guarda la hoja de cálculo con las nuevas filas. A partir de lo anterior, importa la tabla a
+Excel. 
+
+```{r}
+dataSet2 <- read_excel("C:/Users/juan_/OneDrive - Universidad de Colima/Escritorio/6to/practica 4 k-means - MdD/src/data2.xlsx")
+
+dataFrame2 = data.frame(dataSet2)
+print(dataFrame2)
+
+clusters2 = kmeans(dataFrame2, 3, nstart = 100)
+print(clusters2)
+
+plot(dataFrame2, col = clusters2$cluster)
+```
+<p>**Luego analiza el agrupamiento realizado por el algoritmo K-Means a esos datos.
+Grafica los grupos definidos y escribe un breve análisis de estos.**</p>
+<p>Al dejar la generación del modelo idéntico e imprimir el gráfico me di cuenta que el algoritmo creó el primer grupo muy disperso, por lo que cambié el segundo parametro de kmeans a 3, una vez graficando, el agrupamiento se visualiza más coherente. Todo esto me llevo a preguntarle a chatGPT si hay alguna manera de que el algoritmo infiera en la cantidad de clusters, la respuesta fue que como tal la función de kmeans no es capaz de hacerlo, sin embargo hay métodos para poder determinar el número óptimo de clusters, como el método del codo y de la silutea, técnicas que en el semestre anterior se habian estudiado</p>
+
+<h3 style="text-align:center">Observaciones y conclusiones</h3><br/>
+
+<p>**1. Escribe comentarios generales sobre la práctica en función al objetivo planteado
+al inicio de esta.**</p>
+<p>Este algoritmo es bueno cuando el dataset no está clasificado, ya que no require de un etiqueta anterior, no obstante, visualmente se puede apreciar que los outliers obstaculizan el correcto agrupamiento</p><br/>
